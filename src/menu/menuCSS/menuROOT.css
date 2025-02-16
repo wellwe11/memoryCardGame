@@ -1,0 +1,23 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.flexCenterRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexCenterColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
