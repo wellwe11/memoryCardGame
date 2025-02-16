@@ -44,12 +44,12 @@ function ScoreBoard() {
   );
 }
 
-function Card() {
+function Card({ pokemonName }) {
   return (
     <div className="cardContainer">
       <div className="cardWrapper">
         <div className="cardHeader">
-          <h5>pokemon name</h5>
+          <h5>{pokemonName}</h5>
           <h5>icon</h5>
         </div>
         <div className="cardImgContainer">
@@ -63,19 +63,17 @@ function Card() {
   );
 }
 
-function GameBoard() {
-  return (
-    <div>
-      <Card />
-    </div>
-  );
-}
-
 function MainContent() {
+  const someArray = [1, 2, 3, 4, 5, 6, 7];
+
   return (
     <div className="mainContentClass">
       <ScoreBoard />
-      <GameBoard />
+      <div className="cardBoardContainer">
+        {someArray.map((el) => (
+          <Card pokemonName={el} key={el} />
+        ))}
+      </div>
     </div>
   );
 }

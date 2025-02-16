@@ -1,5 +1,5 @@
 .mainContentClass {
-  height: 400px;
+  height: 700px;
 
   display: flex;
   flex-direction: column;
@@ -7,4 +7,17 @@
   align-items: center;
 
   background-color: white;
+}
+
+.cardBoardContainer {
+  height: 500px;
+  width: 900px;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  flex-wrap: wrap;
+
+  overflow: hidden;
 }
