@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Menu from "./menu/menu";
+import GameContent from "./gameContent/gameDisplay";
 
 import "./App.css";
 
@@ -10,8 +11,11 @@ function Header() {
 function App() {
   return (
     <div>
-      <div>
+      <div className="flexCenterRow menuContainer" style={{ display: "none" }}>
         <Menu />
+      </div>
+      <div>
+        <GameContent />
       </div>
     </div>
   );
