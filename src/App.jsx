@@ -14,7 +14,7 @@ function App() {
       <div className="flexCenterRow menuContainer" style={{ display: "none" }}>
         <Menu />
       </div>
-      <div>
+      <div className="headerContainer">
         <GameContent />
       </div>
     </div>

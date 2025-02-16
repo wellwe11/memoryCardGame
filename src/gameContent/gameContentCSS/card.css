@@ -1,0 +1,63 @@
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 2px solid black;
+  border-radius: 10px;
+
+  height: 250px;
+  width: 220px;
+
+  background-color: white;
+}
+
+.cardWrapper {
+  display: inherit;
+  flex-direction: column;
+
+  width: 90%;
+  height: 90%;
+  background-color: orange;
+
+  border: inherit;
+  border-radius: inherit;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  height: 15%;
+}
+
+.cardImgContainer {
+  height: 85%;
+  background-color: red;
+
+  display: inherit;
+  justify-content: center;
+  align-items: center;
+
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.cardImgWrapper {
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+
+  height: 85%;
+  width: 95%;
+  background-color: white;
+
+  border-radius: 10px;
+}
+
+.cardImgWrapper h1 {
+  color: black;
+}

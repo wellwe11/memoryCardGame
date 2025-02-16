@@ -1,0 +1,64 @@
+.headerContent {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 60px;
+
+  background-color: white;
+}
+
+.headerSections {
+  display: flex;
+  width: 32%;
+  background-color: white;
+  height: 100%;
+}
+
+.headerSections button {
+  align-self: center;
+  height: 60%;
+  max-height: 50px;
+  width: fit-content;
+  max-width: 120px;
+  min-width: 80px;
+  margin: 5px;
+
+  background-color: white;
+  color: black;
+
+  border: none;
+  outline: none;
+}
+
+.headerSections button:hover {
+  transition: background-color 0.2s ease-out;
+  background-color: gainsboro;
+
+  cursor: pointer;
+}
+
+.headerSections h1 {
+  display: flex;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.headerSections h1 div:nth-of-type(1) {
+  color: rgb(255, 204, 52);
+}
+
+.headerSections h1 div:nth-of-type(2) {
+  margin-left: 10px;
+  color: rgb(7, 7, 255);
+}
+
+.headerSections:nth-of-type(1) {
+  justify-content: flex-start;
+}
+
+.headerSections:nth-of-type(2) {
+  justify-content: center;
+}
+
+.headerSections:nth-of-type(3) {
+  justify-content: flex-end;
+}

@@ -1,0 +1,37 @@
+.scoreBoardContainer {
+  background-color: orange;
+  display: flex;
+  flex-direction: column;
+
+  width: 220px;
+  height: 100px;
+}
+
+.scoreBoardHeader {
+  background-color: green;
+  height: 30%;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.currentScoreTrackerContainer {
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.currentScoreTrackerWrapper {
+  background-color: red;
+  height: 60%;
+  width: 20%;
+
+  display: inherit;
+  justify-content: inherit;
+  align-items: inherit;
+
+  border: 1px solid white;
+  border-radius: 10px;
+}
