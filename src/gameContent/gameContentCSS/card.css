@@ -16,6 +16,10 @@
   margin: 10px;
 }
 
+.cardContainer:hover {
+  cursor: pointer;
+}
+
 .cardWrapper {
   display: inherit;
   flex-direction: column;
