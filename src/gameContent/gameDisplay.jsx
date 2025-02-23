@@ -99,6 +99,11 @@ function MainContent() {
   const fetchData = async () => {
     let res = await fetch("https://pokeapi.co/api/v2/pokemon/");
     let data = await res.json();
+
+    let resTwo = await fetch("https://pokeapi.co/api/v2/type/2");
+    let dataTwo = await resTwo.json();
+
+    console.log(dataTwo);
     setRepos(data);
   };
 
