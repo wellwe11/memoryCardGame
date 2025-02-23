@@ -34,7 +34,11 @@ function ScoreBoard({ currScore, maxScore, bestScore }) {
           <h4>Score: {currScore}</h4>
         </div>
         <div>
-          <h4>Best Score: {bestScore}</h4>
+          <h4>
+            {bestScore < maxScore
+              ? `Best score: ${bestScore}`
+              : "You have won!"}
+          </h4>
         </div>
       </div>
       <div className="currentScoreTrackerContainer">
@@ -73,41 +77,24 @@ function MainContent() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [clickedNumbers, setClickedNumbers] = useState([]);
-  const [clickedNumber, setClickedNumber] = useState();
-
-  useEffect(() => {
-    if (score > bestScore) {
-      setBestScore((prevBestScore) => prevBestScore + 1);
-    }
-  }, [score, bestScore]);
 
   const cardClicked = (e) => {
     if (e.target === e.currentTarget) {
-      setClickedNumber(Number(e.target.id));
-      if (!clickedNumbers.includes(e.target.id)) {
+      if (!clickedNumbers.includes(Number(e.target.id))) {
         setClickedNumbers((prev) => [...prev, Number(e.target.id)]);
-        console.log(clickedNumbers);
         setScore((prevScore) => prevScore + 1);
+      } else {
+        setScore(0);
+        setClickedNumbers([]);
       }
     }
   };
 
   useEffect(() => {
-    if (clickedNumbers.includes(clickedNumber)) {
-      setScore(0);
-      setClickedNumber(null);
-      setClickedNumbers([]);
+    if (score > bestScore) {
+      setBestScore(score);
     }
-  }, [clickedNumbers, clickedNumber, score]);
-
-  console.log(
-    "score:",
-    score,
-    "clicked number:",
-    clickedNumber,
-    "array:",
-    clickedNumbers
-  );
+  }, [score]);
 
   return (
     <div className="mainContentClass">
