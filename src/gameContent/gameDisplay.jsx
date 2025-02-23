@@ -52,17 +52,17 @@ function ScoreBoard({ currScore, maxScore, bestScore }) {
   );
 }
 
-function Card({ pokemonName, id, onClick }) {
+function Card({ pokemonName, id, onClick, icon }) {
   return (
     <div className="cardContainer" id={id} onClick={onClick}>
-      <div className="cardWrapper">
-        <div className="cardHeader">
+      <div className="cardWrapper" id={id}>
+        <div className="cardHeader" id={id}>
           <h5>{pokemonName}</h5>
-          <h5>icon</h5>
+          <h5>{icon}</h5>
         </div>
-        <div className="cardImgContainer">
-          <div className="cardImgWrapper">
-            <h1>placeholder</h1>
+        <div className="cardImgContainer" id={id}>
+          <div className="cardImgWrapper" id={id}>
+            <h4>Placeholder</h4>
             <img />
           </div>
         </div>
@@ -79,14 +79,12 @@ function MainContent() {
   const [clickedNumbers, setClickedNumbers] = useState([]);
 
   const cardClicked = (e) => {
-    if (e.target === e.currentTarget) {
-      if (!clickedNumbers.includes(Number(e.target.id))) {
-        setClickedNumbers((prev) => [...prev, Number(e.target.id)]);
-        setScore((prevScore) => prevScore + 1);
-      } else {
-        setScore(0);
-        setClickedNumbers([]);
-      }
+    if (!clickedNumbers.includes(Number(e.target.id))) {
+      setClickedNumbers((prev) => [...prev, Number(e.target.id)]);
+      setScore((prevScore) => prevScore + 1);
+    } else {
+      setScore(0);
+      setClickedNumbers([]);
     }
   };
 
@@ -96,6 +94,26 @@ function MainContent() {
     }
   }, [score]);
 
+  const [repos, setRepos] = useState([]);
+
+  const fetchData = async () => {
+    let res = await fetch("https://pokeapi.co/api/v2/pokemon/");
+    let data = await res.json();
+    setRepos(data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (repos.results !== undefined) {
+      console.log(repos);
+    }
+  }, [repos]);
+
+  console.log(repos);
+
   return (
     <div className="mainContentClass">
       <ScoreBoard
@@ -104,9 +122,17 @@ function MainContent() {
         bestScore={bestScore}
       />
       <div className="cardBoardContainer">
-        {someArray.map((el) => (
-          <Card pokemonName={el} key={el} id={el} onClick={cardClicked} />
-        ))}
+        {repos.results !== undefined
+          ? someArray.map((el) => (
+              <Card
+                pokemonName={repos.results[el].name}
+                icon={el}
+                key={el}
+                id={el}
+                onClick={cardClicked}
+              />
+            ))
+          : ""}
       </div>
     </div>
   );

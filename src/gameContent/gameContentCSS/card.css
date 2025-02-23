@@ -69,3 +69,8 @@
 .cardImgWrapper h1 {
   color: black;
 }
+
+.cardImgWrapper img {
+  height: 100%;
+  width: 100%;
+}
