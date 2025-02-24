@@ -52,7 +52,7 @@ function ScoreBoard({ currScore, maxScore, bestScore }) {
   );
 }
 
-function Card({ pokemonName, id, onClick, icon }) {
+function Card({ pokemonName, id, onClick, icon, pokemonPicture, imgAlt }) {
   return (
     <div className="cardContainer" id={id} onClick={onClick}>
       <div className="cardWrapper" id={id}>
@@ -62,7 +62,7 @@ function Card({ pokemonName, id, onClick, icon }) {
         </div>
         <div className="cardImgContainer" id={id}>
           <div className="cardImgWrapper" id={id}>
-            <h4>Placeholder</h4>
+            <img src={pokemonPicture} alt={imgAlt} />
             <img />
           </div>
         </div>
@@ -97,14 +97,32 @@ function MainContent() {
   const [repos, setRepos] = useState([]);
 
   const fetchData = async () => {
-    let res = await fetch("https://pokeapi.co/api/v2/pokemon/");
-    let data = await res.json();
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=10")
+      .then((response) => response.json())
+      .then(function (allpokemon) {
+        allpokemon.results.forEach(function (pokemon) {
+          fetchPokemonData(pokemon);
+        });
+      });
+  };
 
-    let resTwo = await fetch("https://pokeapi.co/api/v2/type/2");
-    let dataTwo = await resTwo.json();
+  const fetchPokemonData = (pokemon) => {
+    let url = pokemon.url;
 
-    console.log(dataTwo);
-    setRepos(data);
+    fetch(url)
+      .then((response) => response.json())
+      .then(function (pokeData) {
+        setRepos((prevRepos) => [
+          ...prevRepos,
+          {
+            name: pokeData.name,
+            imageData: `https://img.pokemondb.net/artwork/${pokeData.name}.jpg`,
+            type: pokeData.types[0].type.name,
+            id: pokeData.id,
+            typeIconUrl: "",
+          },
+        ]);
+      });
   };
 
   useEffect(() => {
@@ -112,12 +130,8 @@ function MainContent() {
   }, []);
 
   useEffect(() => {
-    if (repos.results !== undefined) {
-      console.log(repos);
-    }
+    console.log(repos);
   }, [repos]);
-
-  console.log(repos);
 
   return (
     <div className="mainContentClass">
@@ -127,14 +141,15 @@ function MainContent() {
         bestScore={bestScore}
       />
       <div className="cardBoardContainer">
-        {repos.results !== undefined
+        {repos.length === 20
           ? someArray.map((el) => (
               <Card
-                pokemonName={repos.results[el].name}
-                icon={el}
+                pokemonName={repos[el].name}
+                icon={repos[el].type}
                 key={el}
                 id={el}
                 onClick={cardClicked}
+                pokemonPicture={repos[el].imageData}
               />
             ))
           : ""}
