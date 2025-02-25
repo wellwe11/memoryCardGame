@@ -107,41 +107,27 @@ function MainContent() {
 
   const [repos, setRepos] = useState([]);
 
-  const url = "https://pokeapi.co/api/v2/pokemon?limit=10";
-
   const fetchData = async () => {
-    fetch(url)
-      .then((response) => response.json())
-      .then(function (allpokemon) {
-        allpokemon.results.forEach(function (pokemon) {
-          fetchPokemonData(pokemon);
-        });
-      });
-  };
-
-  const pokemons = [];
-
-  const fetchPokemonData = (pokemon) => {
-    if (!pokemons.includes(pokemon.name)) {
-      pokemons.push(pokemon.name);
-      let url = pokemon.url;
+    let i = 0;
+    while (i < 10) {
+      i++;
+      const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
 
       fetch(url)
         .then((response) => response.json())
-        .then(function (pokeData) {
+        .then(function (pokemon) {
           setRepos((prevRepos) => [
             ...prevRepos,
             {
-              name: pokeData.name,
-              imageData: `https://img.pokemondb.net/artwork/${pokeData.name}.jpg`,
-              type: pokeData.types[0].type.name,
-              id: pokeData.id,
+              name: pokemon.name,
+              imageData: `https://img.pokemondb.net/artwork/${pokemon.name}.jpg`,
+              type: pokemon.types[0].type.name,
+              id: pokemon.id,
               typeIconUrl: "",
             },
           ]);
         });
     }
-    console.log(pokemons);
   };
 
   useEffect(() => {
