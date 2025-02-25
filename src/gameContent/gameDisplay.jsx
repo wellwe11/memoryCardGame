@@ -85,8 +85,6 @@ function Card({
 }
 
 function MainContent() {
-  const someArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [clickedNumbers, setClickedNumbers] = useState([]);
@@ -109,7 +107,7 @@ function MainContent() {
 
   const [repos, setRepos] = useState([]);
 
-  const url = "https://pokeapi.co/api/v2/pokemon/";
+  const url = "https://pokeapi.co/api/v2/pokemon?limit=10";
 
   const fetchData = async () => {
     fetch(url)
@@ -143,6 +141,7 @@ function MainContent() {
           ]);
         });
     }
+    console.log(pokemons);
   };
 
   useEffect(() => {
@@ -159,8 +158,8 @@ function MainContent() {
     setCardOrder([]);
     let tempArray = [];
 
-    while (tempArray.length < 10) {
-      let nr = Math.floor(Math.random() * 10);
+    while (tempArray.length < 9) {
+      let nr = Math.floor(Math.random() * 9);
       if (!tempArray.includes(nr)) {
         tempArray.push(nr);
       }
@@ -172,11 +171,11 @@ function MainContent() {
     <div className="mainContentClass">
       <ScoreBoard
         currScore={score}
-        maxScore={someArray.length}
+        maxScore={cardOrder.length}
         bestScore={bestScore}
       />
       <div className="cardBoardContainer">
-        {repos.length > someArray.length
+        {repos.length > cardOrder.length
           ? cardOrder.map((el) => (
               <Card
                 pokemonName={repos[el].name}
