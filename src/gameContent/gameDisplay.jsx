@@ -88,6 +88,8 @@ function MainContent() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [clickedNumbers, setClickedNumbers] = useState([]);
+  const [fetchedData, setFetchedData] = useState(false);
+  const [cardOrder, setCardOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const cardClicked = (e) => {
     if (!clickedNumbers.includes(Number(e.target.id))) {
@@ -107,45 +109,43 @@ function MainContent() {
 
   const [repos, setRepos] = useState([]);
 
-  const fetchData = async () => {
-    let i = 0;
-    while (i < 10) {
-      i++;
-      const url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-
-      fetch(url)
-        .then((response) => response.json())
-        .then(function (pokemon) {
-          setRepos((prevRepos) => [
-            ...prevRepos,
-            {
-              name: pokemon.name,
-              imageData: `https://img.pokemondb.net/artwork/${pokemon.name}.jpg`,
-              type: pokemon.types[0].type.name,
-              id: pokemon.id,
-              typeIconUrl: "",
-            },
-          ]);
-        });
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const promises = cardOrder.map((id) =>
+        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((reponse) =>
+          reponse.json()
+        )
+      );
+
+      const pokemons = await Promise.all(promises);
+
+      const newRepos = pokemons.map((pokemon) => ({
+        name: pokemon.name,
+        imageData: `https://img.pokemondb.net/artwork/${pokemon.name}.jpg`,
+        type: pokemon.types[0].type.name,
+        id: pokemon.id,
+        typeIconUrl: "",
+      }));
+
+      setRepos((prevRepos) => [...prevRepos, ...newRepos]);
+    };
+
+    fetchData();
+
     const timer = setTimeout(() => {
-      fetchData();
+      setFetchedData(true);
     }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  const [cardOrder, setCardOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
   const changeCardOrder = () => {
     setCardOrder([]);
     let tempArray = [];
 
     while (tempArray.length < 9) {
-      let nr = Math.floor(Math.random() * 9);
+      let nr = Math.floor(Math.random() * 9) + 1;
+
       if (!tempArray.includes(nr)) {
         tempArray.push(nr);
       }
@@ -161,7 +161,7 @@ function MainContent() {
         bestScore={bestScore}
       />
       <div className="cardBoardContainer">
-        {repos.length > cardOrder.length
+        {fetchedData
           ? cardOrder.map((el) => (
               <Card
                 pokemonName={repos[el].name}
