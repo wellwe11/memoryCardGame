@@ -52,17 +52,30 @@ function ScoreBoard({ currScore, maxScore, bestScore }) {
   );
 }
 
-function Card({ pokemonName, id, onClick, icon, pokemonPicture, imgAlt }) {
+function Card({
+  pokemonName,
+  id,
+  onClick,
+  icon,
+  pokemonPicture,
+  imgAlt,
+  index,
+}) {
   return (
-    <div className="cardContainer" id={id} onClick={onClick}>
+    <div
+      className="cardContainer"
+      id={id}
+      onClick={onClick}
+      style={{ order: `${index} !important` }}
+    >
       <div className="cardWrapper" id={id}>
         <div className="cardHeader" id={id}>
-          <h5>{pokemonName}</h5>
-          <h5>{icon}</h5>
+          <h5 id={id}>{pokemonName}</h5>
+          <h5 id={id}>{icon}</h5>
         </div>
         <div className="cardImgContainer" id={id}>
           <div className="cardImgWrapper" id={id}>
-            <img src={pokemonPicture} alt={imgAlt} />
+            <img src={pokemonPicture} alt={imgAlt} id={id} />
             <img />
           </div>
         </div>
@@ -96,8 +109,10 @@ function MainContent() {
 
   const [repos, setRepos] = useState([]);
 
+  const url = "https://pokeapi.co/api/v2/pokemon/";
+
   const fetchData = async () => {
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=10")
+    fetch(url)
       .then((response) => response.json())
       .then(function (allpokemon) {
         allpokemon.results.forEach(function (pokemon) {
@@ -106,32 +121,52 @@ function MainContent() {
       });
   };
 
-  const fetchPokemonData = (pokemon) => {
-    let url = pokemon.url;
+  const pokemons = [];
 
-    fetch(url)
-      .then((response) => response.json())
-      .then(function (pokeData) {
-        setRepos((prevRepos) => [
-          ...prevRepos,
-          {
-            name: pokeData.name,
-            imageData: `https://img.pokemondb.net/artwork/${pokeData.name}.jpg`,
-            type: pokeData.types[0].type.name,
-            id: pokeData.id,
-            typeIconUrl: "",
-          },
-        ]);
-      });
+  const fetchPokemonData = (pokemon) => {
+    if (!pokemons.includes(pokemon.name)) {
+      pokemons.push(pokemon.name);
+      let url = pokemon.url;
+
+      fetch(url)
+        .then((response) => response.json())
+        .then(function (pokeData) {
+          setRepos((prevRepos) => [
+            ...prevRepos,
+            {
+              name: pokeData.name,
+              imageData: `https://img.pokemondb.net/artwork/${pokeData.name}.jpg`,
+              type: pokeData.types[0].type.name,
+              id: pokeData.id,
+              typeIconUrl: "",
+            },
+          ]);
+        });
+    }
   };
 
   useEffect(() => {
-    fetchData();
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    console.log(repos);
-  }, [repos]);
+  const [cardOrder, setCardOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+  const changeCardOrder = () => {
+    setCardOrder([]);
+    let tempArray = [];
+
+    while (tempArray.length < 10) {
+      let nr = Math.floor(Math.random() * 10);
+      if (!tempArray.includes(nr)) {
+        tempArray.push(nr);
+      }
+    }
+    setCardOrder(tempArray);
+  };
 
   return (
     <div className="mainContentClass">
@@ -141,15 +176,19 @@ function MainContent() {
         bestScore={bestScore}
       />
       <div className="cardBoardContainer">
-        {repos.length === 20
-          ? someArray.map((el) => (
+        {repos.length > someArray.length
+          ? cardOrder.map((el) => (
               <Card
                 pokemonName={repos[el].name}
                 icon={repos[el].type}
                 key={el}
                 id={el}
-                onClick={cardClicked}
+                onClick={(e) => {
+                  cardClicked(e);
+                  changeCardOrder();
+                }}
                 pokemonPicture={repos[el].imageData}
+                index={el}
               />
             ))
           : ""}
