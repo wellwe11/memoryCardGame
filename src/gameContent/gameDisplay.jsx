@@ -4,6 +4,8 @@ import "./gameContentCSS/scoreBoard.css";
 import "./gameContentCSS/mainContent.css";
 import "./gameContentCSS/card.css";
 
+import BacksideCard from "./gameContentImages/pokemonCardBackside.jpg";
+
 import { useState, useEffect } from "react";
 
 function HeaderContent() {
@@ -56,31 +58,44 @@ function Card({
   pokemonName,
   id,
   onClick,
-  icon,
+  typeOne,
   pokemonPicture,
   imgAlt,
   index,
+  cardState,
 }) {
   return (
-    <div
-      className="cardContainer"
-      id={id}
-      onClick={onClick}
-      style={{ order: `${index} !important` }}
-    >
-      <div className="cardWrapper" id={id}>
-        <div className="cardHeader" id={id}>
-          <h5 id={id}>{pokemonName}</h5>
-          <h5 id={id}>{icon}</h5>
-        </div>
-        <div className="cardImgContainer" id={id}>
-          <div className="cardImgWrapper" id={id}>
-            <img src={pokemonPicture} alt={imgAlt} id={id} />
-            <img />
+    <>
+      {cardState ? (
+        <div
+          className="cardContainer"
+          id={id}
+          onClick={onClick}
+          style={{ order: `${index} !important` }}
+        >
+          <div className="cardWrapper" id={id}>
+            <div className="cardHeader" id={id}>
+              <div>
+                <h5 id={id}>{pokemonName}</h5>
+              </div>
+              <div>
+                <h5>{typeOne}</h5>
+              </div>
+            </div>
+            <div className="cardImgContainer" id={id}>
+              <div className="cardImgWrapper" id={id}>
+                <img src={pokemonPicture} alt={imgAlt} id={id} />
+                <img />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="cardContainerTwo">
+          <img src={BacksideCard} alt="" />
+        </div>
+      )}
+    </>
   );
 }
 
@@ -90,6 +105,7 @@ function MainContent() {
   const [clickedNumbers, setClickedNumbers] = useState([]);
   const [fetchedData, setFetchedData] = useState(false);
   const [cardOrder, setCardOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const [repos, setRepos] = useState([]);
 
   const cardClicked = (e) => {
     if (!clickedNumbers.includes(Number(e.target.id))) {
@@ -107,8 +123,6 @@ function MainContent() {
     }
   }, [score]);
 
-  const [repos, setRepos] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       const promises = cardOrder.map((id) =>
@@ -120,12 +134,15 @@ function MainContent() {
       const pokemons = await Promise.all(promises);
 
       const newRepos = pokemons.map((pokemon) => ({
-        name: pokemon.name,
+        name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
         imageData: `https://img.pokemondb.net/artwork/${pokemon.name}.jpg`,
-        type: pokemon.types[0].type.name,
+        typeOne:
+          pokemon.types[0].type.name.charAt(0).toUpperCase() +
+          pokemon.types[0].type.name.slice(1),
         id: pokemon.id,
-        typeIconUrl: "",
       }));
+
+      console.log(pokemons);
 
       setRepos((prevRepos) => [...prevRepos, ...newRepos]);
     };
@@ -134,7 +151,7 @@ function MainContent() {
 
     const timer = setTimeout(() => {
       setFetchedData(true);
-    }, 1000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -150,7 +167,17 @@ function MainContent() {
         tempArray.push(nr);
       }
     }
+
     setCardOrder(tempArray);
+  };
+
+  const [cardState, setCardState] = useState(true);
+
+  const cardChange = () => {
+    setCardState(false);
+    setTimeout(() => {
+      setCardState(true);
+    }, 1000);
   };
 
   return (
@@ -165,15 +192,17 @@ function MainContent() {
           ? cardOrder.map((el) => (
               <Card
                 pokemonName={repos[el].name}
-                icon={repos[el].type}
+                typeOne={repos[el].typeOne}
                 key={el}
                 id={el}
                 onClick={(e) => {
                   cardClicked(e);
                   changeCardOrder();
+                  cardChange();
                 }}
                 pokemonPicture={repos[el].imageData}
                 index={el}
+                cardState={cardState}
               />
             ))
           : ""}

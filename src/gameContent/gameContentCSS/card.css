@@ -16,6 +16,27 @@
   margin: 10px;
 }
 
+.cardContainerTwo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  max-height: 200px;
+  height: 40%;
+  width: 150px;
+
+  background-color: green;
+  border: 2px solid green;
+  border-radius: 10px;
+
+  margin: 10px;
+}
+
+.cardContainerTwo img {
+  height: 100%;
+  width: 150px;
+}
+
 .cardContainer:hover {
   cursor: pointer;
 }
@@ -40,6 +61,15 @@
   margin-right: 5px;
 
   height: 15%;
+}
+
+.cardHeader img {
+  width: 23px;
+  height: 23px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .cardImgContainer {
