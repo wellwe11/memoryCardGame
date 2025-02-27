@@ -5,6 +5,7 @@ import "./gameContentCSS/mainContent.css";
 import "./gameContentCSS/card.css";
 
 import BacksideCard from "./gameContentImages/pokemonCardBackside.jpg";
+import LoadingSVG from "./loadingSVG";
 
 import { useState, useEffect } from "react";
 
@@ -205,25 +206,29 @@ function MainContent() {
         bestScore={bestScore}
       />
       <div className="cardBoardContainer">
-        {fetchedData
-          ? cardOrder.map((el) => (
-              <Card
-                pokemonName={repos[el].name}
-                typeOne={repos[el].typeOne}
-                key={`${el}`}
-                id={el}
-                onClick={(e) => {
-                  cardClicked(e);
-                  changeCardOrder();
-                  cardChange();
-                }}
-                pokemonPicture={repos[el].imageData}
-                index={el}
-                cardState={cardState}
-                imgAlt={`${repos[el].name} pokemon card`}
-              />
-            ))
-          : ""}
+        {fetchedData ? (
+          cardOrder.map((el) => (
+            <Card
+              pokemonName={repos[el].name}
+              typeOne={repos[el].typeOne}
+              key={`${el}`}
+              id={el}
+              onClick={(e) => {
+                cardClicked(e);
+                changeCardOrder();
+                cardChange();
+              }}
+              pokemonPicture={repos[el].imageData}
+              index={el}
+              cardState={cardState}
+              imgAlt={`${repos[el].name} pokemon card`}
+            />
+          ))
+        ) : (
+          <div className="loadingImage">
+            <LoadingSVG />
+          </div>
+        )}
       </div>
     </div>
   );

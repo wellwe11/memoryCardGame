@@ -41,6 +41,7 @@
 
   margin: 10px;
   border-radius: 10px;
+
   margin-top: -123%;
   margin-left: 12px;
   will-change: transform;
@@ -119,4 +120,10 @@
 .cardImgWrapper img {
   height: 100%;
   max-width: 110px;
+}
+
+.loadingImage {
+  height: 100px;
+  width: 100px;
+  margin-top: -200px;
 }
