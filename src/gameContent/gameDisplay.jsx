@@ -64,10 +64,23 @@ function Card({
   index,
   cardState,
 }) {
+  const [flipCard, setFlipCard] = useState(false);
+
+  useEffect(() => {
+    let nr = Math.floor(Math.random() * 5) + 1;
+    if (cardState) {
+      setFlipCard(true);
+    } else {
+      setTimeout(() => {
+        setFlipCard(false);
+      }, `${nr}${0}`);
+    }
+  }, [cardState]);
+
   return (
     <div
       className={`${
-        cardState ? "frontAndBackCardContainer" : "frontAndBackSwitch"
+        flipCard ? "frontAndBackCardContainer" : "frontAndBackSwitch"
       }`}
       id={id}
     >
@@ -170,7 +183,7 @@ function MainContent() {
       }
 
       setCardOrder(tempArray);
-    }, 500);
+    }, 550);
   };
 
   const [cardState, setCardState] = useState(true);
@@ -178,13 +191,11 @@ function MainContent() {
   const cardChange = () => {
     setTimeout(() => {
       setCardState(false);
-    }, 100);
+    }, 120);
     setTimeout(() => {
       setCardState(true);
     }, 1000);
   };
-
-  console.log(cardState);
 
   return (
     <div className="mainContentClass">

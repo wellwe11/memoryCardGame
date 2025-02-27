@@ -35,13 +35,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 
-  max-height: 202px;
-  width: 155px;
+  height: 202px;
 
   margin: 10px;
-  position: absolute;
-  margin-top: -120%;
+  border-radius: 10px;
+  margin-top: -123%;
+  margin-left: 12px;
   will-change: transform;
   transform: rotateY(180deg);
 }
