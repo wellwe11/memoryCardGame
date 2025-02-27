@@ -65,37 +65,38 @@ function Card({
   cardState,
 }) {
   return (
-    <>
-      {cardState ? (
-        <div
-          className="cardContainer"
-          id={id}
-          onClick={onClick}
-          style={{ order: `${index} !important` }}
-        >
-          <div className="cardWrapper" id={id}>
-            <div className="cardHeader" id={id}>
-              <div>
-                <h5 id={id}>{pokemonName}</h5>
-              </div>
-              <div>
-                <h5>{typeOne}</h5>
-              </div>
+    <div
+      className={`${
+        cardState ? "frontAndBackCardContainer" : "frontAndBackSwitch"
+      }`}
+    >
+      <div
+        className={`cardContainer`}
+        id={id}
+        onClick={onClick}
+        style={{ order: `${index} !important` }}
+      >
+        <div className="cardWrapper" id={id}>
+          <div className="cardHeader" id={id}>
+            <div>
+              <h5 id={id}>{pokemonName}</h5>
             </div>
-            <div className="cardImgContainer" id={id}>
-              <div className="cardImgWrapper" id={id}>
-                <img src={pokemonPicture} alt={imgAlt} id={id} />
-                <img />
-              </div>
+            <div>
+              <h5>{typeOne}</h5>
+            </div>
+          </div>
+          <div className="cardImgContainer" id={id}>
+            <div className="cardImgWrapper" id={id}>
+              <img src={pokemonPicture} alt={imgAlt} id={id} />
             </div>
           </div>
         </div>
-      ) : (
-        <div className="cardContainerTwo">
-          <img src={BacksideCard} alt="" />
-        </div>
-      )}
-    </>
+      </div>
+
+      <div className="cardContainerTwo">
+        <img src={BacksideCard} alt="" />
+      </div>
+    </div>
   );
 }
 
