@@ -69,12 +69,13 @@ function Card({
       className={`${
         cardState ? "frontAndBackCardContainer" : "frontAndBackSwitch"
       }`}
+      id={id}
     >
       <div
         className={`cardContainer`}
         id={id}
         onClick={onClick}
-        style={{ order: `${index} !important` }}
+        style={{ order: `${index}` }}
       >
         <div className="cardWrapper" id={id}>
           <div className="cardHeader" id={id}>
@@ -94,7 +95,7 @@ function Card({
       </div>
 
       <div className="cardContainerTwo">
-        <img src={BacksideCard} alt="" />
+        <img src={BacksideCard} alt="pokemoncard backside" />
       </div>
     </div>
   );
@@ -143,8 +144,6 @@ function MainContent() {
         id: pokemon.id,
       }));
 
-      console.log(pokemons);
-
       setRepos((prevRepos) => [...prevRepos, ...newRepos]);
     };
 
@@ -158,28 +157,34 @@ function MainContent() {
   }, []);
 
   const changeCardOrder = () => {
-    setCardOrder([]);
-    let tempArray = [];
+    setTimeout(() => {
+      setCardOrder([]);
+      let tempArray = [];
 
-    while (tempArray.length < 9) {
-      let nr = Math.floor(Math.random() * 9) + 1;
+      while (tempArray.length < 9) {
+        let nr = Math.floor(Math.random() * 9) + 1;
 
-      if (!tempArray.includes(nr)) {
-        tempArray.push(nr);
+        if (!tempArray.includes(nr)) {
+          tempArray.push(nr);
+        }
       }
-    }
 
-    setCardOrder(tempArray);
+      setCardOrder(tempArray);
+    }, 500);
   };
 
   const [cardState, setCardState] = useState(true);
 
   const cardChange = () => {
-    setCardState(false);
+    setTimeout(() => {
+      setCardState(false);
+    }, 100);
     setTimeout(() => {
       setCardState(true);
     }, 1000);
   };
+
+  console.log(cardState);
 
   return (
     <div className="mainContentClass">
@@ -194,7 +199,7 @@ function MainContent() {
               <Card
                 pokemonName={repos[el].name}
                 typeOne={repos[el].typeOne}
-                key={el}
+                key={`${el}`}
                 id={el}
                 onClick={(e) => {
                   cardClicked(e);
@@ -204,6 +209,7 @@ function MainContent() {
                 pokemonPicture={repos[el].imageData}
                 index={el}
                 cardState={cardState}
+                imgAlt={`${repos[el].name} pokemon card`}
               />
             ))
           : ""}

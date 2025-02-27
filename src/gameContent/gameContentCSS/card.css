@@ -1,14 +1,13 @@
-.frontAndBackCardContainer {
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  perspective: 1000px;
+.frontAndBackSwitch {
+  transform: rotateY(180deg);
 }
 
+.frontAndBackCardContainer,
 .frontAndBackSwitch {
   transition: transform 0.6s;
   transform-style: preserve-3d;
   perspective: 1000px;
-  transform: rotateY(180deg);
+  will-change: transform;
 }
 
 .cardContainer,
@@ -41,9 +40,10 @@
   width: 155px;
 
   margin: 10px;
-  transform: rotateY(180deg);
   position: absolute;
   margin-top: -120%;
+  will-change: transform;
+  transform: rotateY(180deg);
 }
 
 .cardContainerTwo img {
