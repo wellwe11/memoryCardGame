@@ -31,7 +31,7 @@ export default function GameStart() {
   return (
     <>
       {hideMenu ? (
-        <div className="headerContainer">
+        <div className="mainContainer">
           <GameContent difficulty={difficulty} />
         </div>
       ) : (

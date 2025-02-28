@@ -302,7 +302,10 @@ function MainContent({ difficulty }) {
         maxScore={cardOrder.length}
         bestScore={bestScore}
       />
-      <div className="cardBoardContainer">
+      <div
+        className="cardBoardContainer"
+        style={{ alignContent: fetchedData ? "flex-start" : "center" }}
+      >
         {fetchedData ? (
           cardOrder.map((el) => (
             <Card
@@ -323,7 +326,9 @@ function MainContent({ difficulty }) {
           ))
         ) : (
           <div className="loadingImage">
-            <LoadingSVG />
+            <div>
+              <LoadingSVG />
+            </div>
           </div>
         )}
       </div>
