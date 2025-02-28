@@ -196,14 +196,14 @@ function MainContent({ difficulty }) {
 
   // amount of cards depending on the difficulty
   const gameDifficulty = {
-    hard: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    medium: [1, 2, 3, 4, 5, 6],
-    easy: [1, 2, 3, 4],
+    Hard: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    Medium: [1, 2, 3, 4, 5, 6],
+    Easy: [1, 2, 3, 4],
   };
 
   // initial card-order
   const [cardOrder, setCardOrder] = useState(
-    gameDifficulty[difficulty] || gameDifficulty.hard
+    gameDifficulty[difficulty] || gameDifficulty.Hard
   );
 
   // pokemon data
@@ -340,11 +340,11 @@ function FooterContent() {
   );
 }
 
-export default function GameContent() {
+export default function GameContent({ difficulty }) {
   return (
     <div>
       <HeaderContent />
-      <MainContent />
+      <MainContent difficulty={difficulty} />
       <FooterContent />
     </div>
   );

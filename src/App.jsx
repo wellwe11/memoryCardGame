@@ -1,5 +1,4 @@
-import GameContent from "./gameContent/gameDisplay";
-import Form from "./form/form";
+import GameStart from "./form/form";
 import { useState } from "react";
 
 import "./App.css";
@@ -13,13 +12,7 @@ function App() {
 
   return (
     <div>
-      {hideMenu ? (
-        <div className="headerContainer">
-          <GameContent />
-        </div>
-      ) : (
-        <Form hideMenuFn={hideMenuFn} />
-      )}
+      <GameStart />
     </div>
   );
 }
