@@ -7,6 +7,13 @@ import "./gameContentCSS/card.css";
 import BacksideCard from "./gameContentImages/pokemonCardBackside.jpg";
 import LoadingSVG from "./loadingSVG";
 
+import fireCard from "./gameContentImages/fireCard.png";
+import waterCard from "./gameContentImages/waterCard.png";
+import electricityCard from "./gameContentImages/electricityCard.png";
+import grassCard from "./gameContentImages/grassCard.png";
+import psychicCard from "./gameContentImages/psychicCard.png";
+import pokemonBackgroundImage from "./gameContentImages/pokemonBackgroundImage.jpg";
+
 import { useState, useEffect } from "react";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -73,7 +80,9 @@ function Card({
   useEffect(() => {
     let nr = Math.floor(Math.random() * 5) + 1;
     if (cardState) {
-      setFlipCard(true);
+      setTimeout(() => {
+        setFlipCard(true);
+      }, `${4}${nr}${0}`);
     } else {
       // flips them with a small amount of delay from each other
       setTimeout(() => {
@@ -124,13 +133,21 @@ function Card({
     y.set(0);
   };
 
+  // store image-data in object to make backgroundImage access them cleaner
+  const pokemonTypeImages = {
+    fire: fireCard,
+    water: waterCard,
+    electricity: electricityCard,
+    grass: grassCard,
+    psychic: psychicCard,
+  };
+
   return (
     <div
       className={`${
         flipCard ? "frontAndBackCardContainer" : "frontAndBackSwitch"
       }`}
       id={id}
-      style={{}}
     >
       <motion.div
         className={`cardContainer`}
@@ -141,6 +158,7 @@ function Card({
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
+          backgroundImage: `url(${pokemonTypeImages[typeOne]})`,
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -150,11 +168,15 @@ function Card({
             <div>
               <h5 id={id}>{pokemonName}</h5>
             </div>
-            <div>
-              <h5>{typeOne}</h5>
-            </div>
           </div>
-          <div className="cardImgContainer" id={id}>
+          <div
+            className="cardImgContainer"
+            id={id}
+            style={{
+              backgroundImage: `url(${pokemonBackgroundImage})`,
+              backgroundSize: "100% 100%",
+            }}
+          >
             <div className="cardImgWrapper" id={id}>
               <img src={pokemonPicture} alt={imgAlt} id={id} />
             </div>
@@ -169,7 +191,7 @@ function Card({
   );
 }
 
-function MainContent() {
+function MainContent({ difficulty }) {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
 
@@ -179,8 +201,17 @@ function MainContent() {
   // state that will load the cards once everything has been fetched
   const [fetchedData, setFetchedData] = useState(false);
 
+  // amount of cards depending on the difficulty
+  const gameDifficulty = {
+    hard: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    medium: [1, 2, 3, 4, 5, 6],
+    easy: [1, 2, 3, 4],
+  };
+
   // initial card-order
-  const [cardOrder, setCardOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const [cardOrder, setCardOrder] = useState(
+    gameDifficulty[difficulty] || gameDifficulty.hard
+  );
 
   // pokemon data
   const [pokemons, setPokemons] = useState([]);
@@ -216,14 +247,13 @@ function MainContent() {
       // create my own object with information I explicitly need
       const newPokemons = pokemons.map((pokemon) => ({
         name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-        imageData: `https://img.pokemondb.net/artwork/${pokemon.name}.jpg`,
-        typeOne:
-          pokemon.types[0].type.name.charAt(0).toUpperCase() +
-          pokemon.types[0].type.name.slice(1),
+        imageData: `https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${pokemon.id}.svg`,
+        typeOne: pokemon.types[0].type.name,
         id: pokemon.id,
       }));
 
       setPokemons((prevPokemons) => [...prevPokemons, ...newPokemons]);
+      console.log(newPokemons);
     };
 
     fetchData();
@@ -246,8 +276,8 @@ function MainContent() {
       // Essentially, we save renders (I think) if we use a local array, then push the entire thing to our state array (cardOrder)
       let tempArray = [];
 
-      while (tempArray.length < 9) {
-        let nr = Math.floor(Math.random() * 9) + 1;
+      while (tempArray.length < cardOrder.length) {
+        let nr = Math.floor(Math.random() * cardOrder.length) + 1;
 
         if (!tempArray.includes(nr)) {
           tempArray.push(nr);
