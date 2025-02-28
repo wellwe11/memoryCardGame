@@ -1,15 +1,24 @@
-.entryContainer {
-  height: 100%;
+.startContainer {
+  height: 100vh;
   width: 100vw;
 
-  position: absolute;
+  background-size: contain;
+}
 
+.entryContainer {
   z-index: 1;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  width: fit-content;
+
+  align-self: center;
+  justify-self: center;
+
+  border: 1px solid white;
 }
 
 .giphyImage {
@@ -17,8 +26,6 @@
   height: 200px;
 
   order: 0;
-
-  margin-top: -300px;
 
   background-size: 100% 100%;
 }
@@ -29,9 +36,7 @@
 
   margin-top: 30px;
 
-  border: 1px solid white;
-
-  width: 400px;
+  width: 450px;
 
   display: flex;
   justify-content: center;

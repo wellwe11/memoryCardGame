@@ -1,4 +1,5 @@
 import GameContent from "../gameContent/gameDisplay";
+import mainBackgroundImage from "../gameContent/gameContentImages/backgroundWallpaper.webp";
 
 import { useState } from "react";
 import "./formCSS/form.css";
@@ -29,18 +30,16 @@ export default function GameStart() {
     "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHByOWF4enFma2IzeW5iNWVmenFzaDFtemlrbHltOHp6dzdiOHYwciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6vEi7p81nYYcU/giphy.gif";
 
   return (
-    <>
+    <div
+      className="startContainer"
+      style={{ backgroundImage: `url(${mainBackgroundImage})` }}
+    >
       {hideMenu ? (
         <div className="mainContainer">
           <GameContent difficulty={difficulty} />
         </div>
       ) : (
-        <div
-          className="entryContainer"
-          style={{
-            display: "",
-          }}
-        >
+        <div className="entryContainer">
           <div
             className="giphyImage"
             style={{
@@ -78,6 +77,6 @@ export default function GameStart() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

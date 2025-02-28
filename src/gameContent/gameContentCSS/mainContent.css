@@ -7,8 +7,6 @@
   align-items: center;
 
   background-color: gray;
-
-  margin-top: 10px;
 }
 
 .cardBoardContainer {
@@ -27,4 +25,30 @@
 
 .cardBoardContainer svg {
   align-self: center;
+}
+
+.headerMenuBtnContainer {
+  margin-left: -150px;
+}
+
+.headerMenuBtn {
+  background-color: white;
+  color: black;
+  border: none;
+
+  height: 60px;
+  width: 70px;
+
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.headerMenuBtn:nth-of-type(2) {
+  margin-left: 10px;
+}
+
+.headerMenuBtn:hover {
+  cursor: pointer;
+
+  background-color: rgba(128, 128, 128, 0.183);
 }

@@ -13,6 +13,8 @@ import electricityCard from "./gameContentImages/electricityCard.png";
 import grassCard from "./gameContentImages/grassCard.png";
 import psychicCard from "./gameContentImages/psychicCard.png";
 import pokemonBackgroundImage from "./gameContentImages/pokemonBackgroundImage.jpg";
+import mainBackgroundImage from "./gameContentImages/backgroundWallpaper.webp";
+import scoreBoardCloud from "./gameContentImages/cloud.webp";
 
 import { useState, useEffect } from "react";
 
@@ -21,19 +23,30 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 function HeaderContent() {
   return (
     <header className="headerContent">
+      <div className="headerMenuBtnContainer">
+        <button className="headerMenuBtn">Menu</button>
+        <button className="headerMenuBtn">Reset</button>
+      </div>
       <div className="headerSections">
         <h1>
           <div>Pokémon </div>
           <div>Memory Card</div>
         </h1>
       </div>
+      <div></div>
     </header>
   );
 }
 
 function ScoreBoard({ currScore, maxScore, bestScore }) {
   return (
-    <div className="scoreBoardContainer">
+    <div
+      className="scoreBoardContainer"
+      style={{
+        backgroundImage: `url(${scoreBoardCloud})`,
+        backgroundSize: "100% 100%",
+      }}
+    >
       <div className="scoreBoardHeader">
         <div>
           <h4>Score: {currScore}</h4>
@@ -296,7 +309,10 @@ function MainContent({ difficulty }) {
   };
 
   return (
-    <div className="mainContentClass">
+    <div
+      className="mainContentClass"
+      style={{ backgroundImage: `url(${mainBackgroundImage})` }}
+    >
       <ScoreBoard
         currScore={score}
         maxScore={cardOrder.length}
