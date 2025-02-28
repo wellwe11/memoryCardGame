@@ -67,6 +67,7 @@ function Card({
   index,
   cardState,
 }) {
+  // a common state to trigger cards transform
   const [flipCard, setFlipCard] = useState(false);
 
   useEffect(() => {
@@ -74,11 +75,15 @@ function Card({
     if (cardState) {
       setFlipCard(true);
     } else {
+      // flips them with a small amount of delay from each other
       setTimeout(() => {
         setFlipCard(false);
       }, `${nr}${0}`);
     }
   }, [cardState]);
+
+  // framer-motion code
+  // -------------------------- vv -------------------------- //
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -88,14 +93,14 @@ function Card({
 
   const rotateX = useTransform(
     mouseYSpring,
-    [-0.5, 0.5],
-    ["17.5deg", "-17.5deg"]
+    [-0.7, 0.7],
+    ["7.5deg", "-7.5deg"]
   );
 
   const rotateY = useTransform(
     mouseXSpring,
-    [-0.5, 0.5],
-    ["-17.5deg", "17.5deg"]
+    [-0.7, 0.7],
+    ["-7.5deg", "7.5deg"]
   );
 
   const handleMouseMove = (e) => {
@@ -167,10 +172,18 @@ function Card({
 function MainContent() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+
+  // each card has a unique ID which it keeps throughout the game. They are added to an array to check if they are clicked again
   const [clickedNumbers, setClickedNumbers] = useState([]);
+
+  // state that will load the cards once everything has been fetched
   const [fetchedData, setFetchedData] = useState(false);
+
+  // initial card-order
   const [cardOrder, setCardOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  const [repos, setRepos] = useState([]);
+
+  // pokemon data
+  const [pokemons, setPokemons] = useState([]);
 
   const cardClicked = (e) => {
     if (!clickedNumbers.includes(Number(e.target.id))) {
@@ -182,6 +195,7 @@ function MainContent() {
     }
   };
 
+  // update highscore whenever we reach a new highscore
   useEffect(() => {
     if (score > bestScore) {
       setBestScore(score);
@@ -189,6 +203,7 @@ function MainContent() {
   }, [score]);
 
   useEffect(() => {
+    // fetch from pokeAPI
     const fetchData = async () => {
       const promises = cardOrder.map((id) =>
         fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((reponse) =>
@@ -198,7 +213,8 @@ function MainContent() {
 
       const pokemons = await Promise.all(promises);
 
-      const newRepos = pokemons.map((pokemon) => ({
+      // create my own object with information I explicitly need
+      const newPokemons = pokemons.map((pokemon) => ({
         name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
         imageData: `https://img.pokemondb.net/artwork/${pokemon.name}.jpg`,
         typeOne:
@@ -207,11 +223,12 @@ function MainContent() {
         id: pokemon.id,
       }));
 
-      setRepos((prevRepos) => [...prevRepos, ...newRepos]);
+      setPokemons((prevPokemons) => [...prevPokemons, ...newPokemons]);
     };
 
     fetchData();
 
+    // a timer to make sure all data is fetched before anything loads
     const timer = setTimeout(() => {
       setFetchedData(true);
     }, 2000);
@@ -219,9 +236,14 @@ function MainContent() {
     return () => clearTimeout(timer);
   }, []);
 
+  // remakes the card order to random order
   const changeCardOrder = () => {
+    // added delay to match the cards turnaround (so they dont render new positions before the cards have flipped)
     setTimeout(() => {
       setCardOrder([]);
+
+      // using a temporary array because I couldnt make it work effective with cardOrder on each new number.
+      // Essentially, we save renders (I think) if we use a local array, then push the entire thing to our state array (cardOrder)
       let tempArray = [];
 
       while (tempArray.length < 9) {
@@ -236,9 +258,11 @@ function MainContent() {
     }, 550);
   };
 
+  // state that will trigger the transition for the cards to turn
   const [cardState, setCardState] = useState(true);
 
   const cardChange = () => {
+    // with delays to help match each others speeds and make the transform smoother
     setTimeout(() => {
       setCardState(false);
     }, 120);
@@ -258,8 +282,8 @@ function MainContent() {
         {fetchedData ? (
           cardOrder.map((el) => (
             <Card
-              pokemonName={repos[el].name}
-              typeOne={repos[el].typeOne}
+              pokemonName={pokemons[el].name}
+              typeOne={pokemons[el].typeOne}
               key={`${el}`}
               id={el}
               onClick={(e) => {
@@ -267,10 +291,10 @@ function MainContent() {
                 changeCardOrder();
                 cardChange();
               }}
-              pokemonPicture={repos[el].imageData}
+              pokemonPicture={pokemons[el].imageData}
               index={el}
               cardState={cardState}
-              imgAlt={`${repos[el].name} pokemon card`}
+              imgAlt={`${pokemons[el].name} pokemon card`}
             />
           ))
         ) : (
