@@ -1,4 +1,3 @@
-import Menu from "./menu/menu";
 import GameContent from "./gameContent/gameDisplay";
 import Form from "./form/form";
 import { useState } from "react";
@@ -14,9 +13,6 @@ function App() {
 
   return (
     <div>
-      <div className="flexCenterRow menuContainer" style={{ display: "none" }}>
-        <Menu />
-      </div>
       {hideMenu ? (
         <div className="headerContainer">
           <GameContent />

@@ -9,9 +9,15 @@
 
 .headerSections {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 32%;
   background-color: white;
   height: 100%;
+
+  font-family: "Press Start 2P", cursive;
+  font-size: 12px;
+  margin: 0;
 }
 
 .headerSections button {
@@ -47,18 +53,6 @@
 }
 
 .headerSections h1 div:nth-of-type(2) {
-  margin-left: 10px;
+  margin-left: 20px;
   color: rgb(7, 7, 255);
-}
-
-.headerSections:nth-of-type(1) {
-  justify-content: flex-start;
-}
-
-.headerSections:nth-of-type(2) {
-  justify-content: center;
-}
-
-.headerSections:nth-of-type(3) {
-  justify-content: flex-end;
 }

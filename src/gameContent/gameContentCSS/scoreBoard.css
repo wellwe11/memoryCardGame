@@ -1,13 +1,17 @@
 .scoreBoardContainer {
+  margin-top: 10px;
+  background-color: white;
   color: black;
   display: flex;
   flex-direction: column;
 
-  width: 220px;
+  width: 250px;
   height: 100px;
 
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 9px;
 }
 
 .scoreBoardHeader {

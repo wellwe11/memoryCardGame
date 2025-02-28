@@ -29,8 +29,6 @@ export default function Form({ hideMenuFn }) {
           </div>
           <div className="MenuButtonsContainer">
             <button onClick={hideMenuFn}>Start game</button>
-            <button>Collections</button>
-            <button>Credits</button>
           </div>
         </div>
       </div>

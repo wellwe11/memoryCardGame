@@ -22,17 +22,10 @@ function HeaderContent() {
   return (
     <header className="headerContent">
       <div className="headerSections">
-        <button>Return to menu</button>
-        <button>Reset</button>
-      </div>
-      <div className="headerSections">
         <h1>
           <div>Pokémon </div>
           <div>Memory Card</div>
         </h1>
-      </div>
-      <div className="headerSections">
-        <button>Help?</button>
       </div>
     </header>
   );
@@ -247,7 +240,8 @@ function MainContent({ difficulty }) {
       // create my own object with information I explicitly need
       const newPokemons = pokemons.map((pokemon) => ({
         name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-        imageData: `https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world/${pokemon.id}.svg`,
+        imageData: `https://raw.githubusercontent.com/PokeAPI/sprites/refs/heads/master/sprites/pokemon/other/showdown/${pokemon.id}.gif`,
+
         typeOne: pokemon.types[0].type.name,
         id: pokemon.id,
       }));
