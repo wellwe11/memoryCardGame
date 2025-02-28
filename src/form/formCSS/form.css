@@ -1,0 +1,72 @@
+.entryContainer {
+  height: 100%;
+  width: 100vw;
+
+  position: absolute;
+  background-color: black;
+
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.giphyImage {
+  width: 500px;
+  height: 300px;
+  margin-top: -230px;
+  margin-right: -300px;
+  margin-left: 50px;
+
+  order: 2;
+}
+
+.entryMenu {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: -230px;
+
+  border: 1px solid white;
+
+  width: 400px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menuTitle {
+}
+
+.menuTitle h1 {
+  display: flex;
+  flex-direction: row;
+}
+
+.menuTitle h1 div:nth-of-type(1) {
+  color: rgb(255, 204, 52);
+}
+
+.menuTitle h1 div:nth-of-type(2) {
+  margin-left: 10px;
+  color: rgb(7, 7, 255);
+}
+
+.MenuButtonsContainer {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.MenuButtonsContainer button {
+  height: 40px;
+
+  width: 100%;
+}
+
+.hideMenu {
+  display: none;
+}
