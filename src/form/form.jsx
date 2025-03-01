@@ -1,4 +1,3 @@
-import GameContent from "../gameContent/gameDisplay";
 import mainBackgroundImage from "../gameContent/gameContentImages/backgroundWallpaper.webp";
 
 import { useState } from "react";
@@ -44,39 +43,41 @@ export default function GameStart() {
           <MainContent difficulty={difficulty} displayFormFn={displayFormFn} />
         </div>
       ) : (
-        <div className="entryContainer">
-          <div
-            className="giphyImage"
-            style={{
-              backgroundImage: `url(${pikachuGif})`,
-            }}
-          ></div>
-          <div>
-            <div className="entryMenu">
-              <div className="menuTitle">
-                <h1>
-                  <div>Pokemon</div>
-                  <div>Memory Card</div>
-                </h1>
-              </div>
-              <div className="MenuButtonsContainer">
-                {!viewDifficulty ? (
-                  <>
-                    <button onClick={hideMenuFn}>Start game</button>
-                    <button onClick={showDifficultyMenu}>Difficulty</button>
-                  </>
-                ) : (
-                  <div
-                    onClick={(e) => {
-                      hideDifficultyMenu();
-                      getDifficulty(e);
-                    }}
-                  >
-                    <button>Easy</button>
-                    <button>Medium</button>
-                    <button>Hard</button>
-                  </div>
-                )}
+        <div className="entryWrapper">
+          <div className="entryContainer">
+            <div
+              className="giphyImage"
+              style={{
+                backgroundImage: `url(${pikachuGif})`,
+              }}
+            ></div>
+            <div>
+              <div className="entryMenu">
+                <div className="menuTitle">
+                  <h1>
+                    <div>Pokemon</div>
+                    <div>Memory Card</div>
+                  </h1>
+                </div>
+                <div className="MenuButtonsContainer">
+                  {!viewDifficulty ? (
+                    <>
+                      <button onClick={hideMenuFn}>Start game</button>
+                      <button onClick={showDifficultyMenu}>Difficulty</button>
+                    </>
+                  ) : (
+                    <div
+                      onClick={(e) => {
+                        hideDifficultyMenu();
+                        getDifficulty(e);
+                      }}
+                    >
+                      <button>Easy</button>
+                      <button>Medium</button>
+                      <button>Hard</button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -281,7 +281,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
     // a timer to make sure all data is fetched before anything loads
     const timer = setTimeout(() => {
       setFetchedData(true);
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);

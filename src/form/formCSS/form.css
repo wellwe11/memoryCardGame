@@ -5,6 +5,14 @@
   background-size: contain;
 }
 
+.entryWrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .entryContainer {
   z-index: 1;
 
@@ -17,6 +25,8 @@
 
   align-self: center;
   justify-self: center;
+
+  margin-top: -300px;
 
   border: 1px solid white;
 }
