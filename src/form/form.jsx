@@ -3,6 +3,7 @@ import mainBackgroundImage from "../gameContent/gameContentImages/backgroundWall
 
 import { useState } from "react";
 import "./formCSS/form.css";
+import MainContent from "../gameContent/gameDisplay";
 
 export default function GameStart() {
   const [difficulty, setDifficulty] = useState();
@@ -29,6 +30,10 @@ export default function GameStart() {
   const pikachuGif =
     "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHByOWF4enFma2IzeW5iNWVmenFzaDFtemlrbHltOHp6dzdiOHYwciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6vEi7p81nYYcU/giphy.gif";
 
+  const displayFormFn = () => {
+    setHideMenu(false);
+  };
+
   return (
     <div
       className="startContainer"
@@ -36,7 +41,7 @@ export default function GameStart() {
     >
       {hideMenu ? (
         <div className="mainContainer">
-          <GameContent difficulty={difficulty} />
+          <MainContent difficulty={difficulty} displayFormFn={displayFormFn} />
         </div>
       ) : (
         <div className="entryContainer">

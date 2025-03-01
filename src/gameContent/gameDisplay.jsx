@@ -14,18 +14,22 @@ import grassCard from "./gameContentImages/grassCard.png";
 import psychicCard from "./gameContentImages/psychicCard.png";
 import pokemonBackgroundImage from "./gameContentImages/pokemonBackgroundImage.jpg";
 import mainBackgroundImage from "./gameContentImages/backgroundWallpaper.webp";
-import scoreBoardCloud from "./gameContentImages/cloud.webp";
+import scoreBoardCloud from "./gameContentImages/cloudTwo.webp";
 
 import { useState, useEffect } from "react";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
-function HeaderContent() {
+function HeaderContent({ onClickMenu, onClickReset }) {
   return (
     <header className="headerContent">
       <div className="headerMenuBtnContainer">
-        <button className="headerMenuBtn">Menu</button>
-        <button className="headerMenuBtn">Reset</button>
+        <button className="headerMenuBtn" onClick={onClickMenu}>
+          Menu
+        </button>
+        <button className="headerMenuBtn" onClick={onClickReset}>
+          Reset
+        </button>
       </div>
       <div className="headerSections">
         <h1>
@@ -197,7 +201,16 @@ function Card({
   );
 }
 
-function MainContent({ difficulty }) {
+function FooterContent() {
+  return (
+    <footer>
+      <div></div>
+      <div></div>
+    </footer>
+  );
+}
+
+export default function MainContent({ difficulty, displayFormFn }) {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
 
@@ -308,64 +321,60 @@ function MainContent({ difficulty }) {
     }, 1000);
   };
 
-  return (
-    <div
-      className="mainContentClass"
-      style={{ backgroundImage: `url(${mainBackgroundImage})` }}
-    >
-      <ScoreBoard
-        currScore={score}
-        maxScore={cardOrder.length}
-        bestScore={bestScore}
-      />
-      <div
-        className="cardBoardContainer"
-        style={{ alignContent: fetchedData ? "flex-start" : "center" }}
-      >
-        {fetchedData ? (
-          cardOrder.map((el) => (
-            <Card
-              pokemonName={pokemons[el].name}
-              typeOne={pokemons[el].typeOne}
-              key={`${el}`}
-              id={el}
-              onClick={(e) => {
-                cardClicked(e);
-                changeCardOrder();
-                cardChange();
-              }}
-              pokemonPicture={pokemons[el].imageData}
-              index={el}
-              cardState={cardState}
-              imgAlt={`${pokemons[el].name} pokemon card`}
-            />
-          ))
-        ) : (
-          <div className="loadingImage">
-            <div>
-              <LoadingSVG />
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+  const setHeaderReset = () => {
+    setScore(0);
+    setClickedNumbers([]);
+    changeCardOrder();
+    cardChange();
+    setBestScore(0);
+  };
 
-function FooterContent() {
-  return (
-    <footer>
-      <div></div>
-      <div></div>
-    </footer>
-  );
-}
-
-export default function GameContent({ difficulty }) {
   return (
     <div>
-      <HeaderContent />
-      <MainContent difficulty={difficulty} />
+      <HeaderContent
+        onClickReset={setHeaderReset}
+        onClickMenu={displayFormFn}
+      />
+      <div
+        className="mainContentClass"
+        style={{ backgroundImage: `url(${mainBackgroundImage})` }}
+      >
+        <ScoreBoard
+          currScore={score}
+          maxScore={cardOrder.length}
+          bestScore={bestScore}
+        />
+        <div
+          className="cardBoardContainer"
+          style={{ alignContent: fetchedData ? "flex-start" : "center" }}
+        >
+          {fetchedData ? (
+            cardOrder.map((el) => (
+              <Card
+                pokemonName={pokemons[el].name}
+                typeOne={pokemons[el].typeOne}
+                key={`${el}`}
+                id={el}
+                onClick={(e) => {
+                  cardClicked(e);
+                  changeCardOrder();
+                  cardChange();
+                }}
+                pokemonPicture={pokemons[el].imageData}
+                index={el}
+                cardState={cardState}
+                imgAlt={`${pokemons[el].name} pokemon card`}
+              />
+            ))
+          ) : (
+            <div className="loadingImage">
+              <div>
+                <LoadingSVG />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
       <FooterContent />
     </div>
   );
