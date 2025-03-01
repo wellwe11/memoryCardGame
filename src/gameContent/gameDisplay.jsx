@@ -220,20 +220,25 @@ export default function MainContent({ difficulty, displayFormFn }) {
   // state that will load the cards once everything has been fetched
   const [fetchedData, setFetchedData] = useState(false);
 
-  // amount of cards depending on the difficulty
-  const gameDifficulty = {
-    Hard: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    Medium: [1, 2, 3, 4, 5, 6],
-    Easy: [1, 2, 3, 4],
-  };
-
   // initial card-order
-  const [cardOrder, setCardOrder] = useState(
-    gameDifficulty[difficulty] || gameDifficulty.Hard
-  );
+  const [cardOrder, setCardOrder] = [];
 
   // pokemon data
   const [pokemons, setPokemons] = useState([]);
+
+  useEffect(() => {
+    const tempArr = [];
+    const difficultyLength =
+      difficulty === "Easy" ? 4 : difficulty === "Medium" ? 6 : 9;
+    while (tempArr.length < difficultyLength) {
+      const randomNum = Math.floor(Math.random() * 98) + 1;
+      if (!tempArr.includes(randomNum)) {
+        tempArr.push(randomNum);
+      }
+    }
+
+    setCardOrder(tempArr);
+  }, []);
 
   const cardClicked = (e) => {
     if (!clickedNumbers.includes(Number(e.target.id))) {
@@ -255,25 +260,31 @@ export default function MainContent({ difficulty, displayFormFn }) {
   useEffect(() => {
     // fetch from pokeAPI
     const fetchData = async () => {
-      const promises = cardOrder.map((id) =>
-        fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((reponse) =>
-          reponse.json()
-        )
+      const data = fetch(`https://pokeapi.co/api/v2/pokemon?limit=99`).then(
+        (reponse) => reponse.json()
       );
 
-      const pokemons = await Promise.all(promises);
+      const pokemons = await data;
+
+      const fetchedPokemons = cardOrder.map((n) => {
+        return fetch(
+          `https://pokeapi.co/api/v2/pokemon/${pokemons.results[n].name}`
+        ).then((reponse) => reponse.json());
+      });
+
+      const pokemonData = await Promise.all(fetchedPokemons);
+
+      console.log(pokemonData);
 
       // create my own object with information I explicitly need
-      const newPokemons = pokemons.map((pokemon) => ({
+      const newPokemons = pokemonData.map((pokemon) => ({
         name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
         imageData: `https://raw.githubusercontent.com/PokeAPI/sprites/refs/heads/master/sprites/pokemon/other/showdown/${pokemon.id}.gif`,
-
         typeOne: pokemon.types[0].type.name,
         id: pokemon.id,
       }));
 
       setPokemons((prevPokemons) => [...prevPokemons, ...newPokemons]);
-      console.log(newPokemons);
     };
 
     fetchData();
