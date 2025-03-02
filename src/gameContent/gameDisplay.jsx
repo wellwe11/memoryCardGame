@@ -221,7 +221,9 @@ export default function MainContent({ difficulty, displayFormFn }) {
   const [fetchedData, setFetchedData] = useState(false);
 
   // initial card-order
-  const [cardOrder, setCardOrder] = [];
+  const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+
+  const [pokemonId, setPokemonId] = useState([]);
 
   // pokemon data
   const [pokemons, setPokemons] = useState([]);
@@ -237,8 +239,8 @@ export default function MainContent({ difficulty, displayFormFn }) {
       }
     }
 
-    setCardOrder(tempArr);
-  }, []);
+    setPokemonId(tempArr);
+  }, [difficulty]);
 
   const cardClicked = (e) => {
     if (!clickedNumbers.includes(Number(e.target.id))) {
@@ -266,15 +268,14 @@ export default function MainContent({ difficulty, displayFormFn }) {
 
       const pokemons = await data;
 
-      const fetchedPokemons = cardOrder.map((n) => {
+      console.log(pokemonId);
+      const fetchedPokemons = pokemonId.map((n) => {
         return fetch(
           `https://pokeapi.co/api/v2/pokemon/${pokemons.results[n].name}`
         ).then((reponse) => reponse.json());
       });
 
       const pokemonData = await Promise.all(fetchedPokemons);
-
-      console.log(pokemonData);
 
       // create my own object with information I explicitly need
       const newPokemons = pokemonData.map((pokemon) => ({
@@ -292,10 +293,10 @@ export default function MainContent({ difficulty, displayFormFn }) {
     // a timer to make sure all data is fetched before anything loads
     const timer = setTimeout(() => {
       setFetchedData(true);
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [pokemonId]);
 
   // remakes the card order to random order
   const changeCardOrder = () => {
@@ -308,7 +309,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
       let tempArray = [];
 
       while (tempArray.length < cardOrder.length) {
-        let nr = Math.floor(Math.random() * cardOrder.length) + 1;
+        let nr = Math.floor(Math.random() * cardOrder.length - 1) + 1;
 
         if (!tempArray.includes(nr)) {
           tempArray.push(nr);
@@ -360,16 +361,16 @@ export default function MainContent({ difficulty, displayFormFn }) {
           style={{ alignContent: fetchedData ? "flex-start" : "center" }}
         >
           {fetchedData ? (
-            cardOrder.map((el) => (
+            cardOrder.map((el, index) => (
               <Card
                 pokemonName={pokemons[el].name}
                 typeOne={pokemons[el].typeOne}
                 key={`${el}`}
                 id={el}
                 onClick={(e) => {
+                  cardChange();
                   cardClicked(e);
                   changeCardOrder();
-                  cardChange();
                 }}
                 pokemonPicture={pokemons[el].imageData}
                 index={el}
