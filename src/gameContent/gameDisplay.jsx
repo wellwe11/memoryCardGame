@@ -217,7 +217,7 @@ function Card({
   );
 }
 
-function FooterContent() {
+export function FooterContent() {
   return (
     <footer className="">
       <div className="footerTextContainer">

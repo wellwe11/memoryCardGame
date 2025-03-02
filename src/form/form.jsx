@@ -3,6 +3,7 @@ import mainBackgroundImage from "../gameContent/gameContentImages/backgroundWall
 import { useState } from "react";
 import "./formCSS/form.css";
 import MainContent from "../gameContent/gameDisplay";
+import { FooterContent } from "../gameContent/gameDisplay";
 
 export default function GameStart() {
   const [difficulty, setDifficulty] = useState();
@@ -80,6 +81,9 @@ export default function GameStart() {
                 </div>
               </div>
             </div>
+          </div>
+          <div style={{ width: "100%" }}>
+            <FooterContent />
           </div>
         </div>
       )}
