@@ -85,10 +85,16 @@
   width: 100%;
 
   font-family: "Press Start 2P", cursive;
+
+  background-color: white;
+  color: black;
+  border: 1px solid gray;
 }
 
 .MenuButtonsContainer button:hover {
   cursor: pointer;
+
+  background-color: gainsboro;
 }
 
 .hideMenu {
