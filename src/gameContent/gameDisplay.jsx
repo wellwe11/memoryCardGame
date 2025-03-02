@@ -234,7 +234,13 @@ export default function MainContent({ difficulty, displayFormFn }) {
   const [fetchedData, setFetchedData] = useState(false);
 
   // initial card-order
-  const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  const [cardOrder, setCardOrder] = useState(
+    difficulty === "Easy"
+      ? [0, 1, 2, 3]
+      : difficulty === "Medium"
+      ? [0, 1, 2, 3, 4]
+      : [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  );
 
   const [pokemonId, setPokemonId] = useState([]);
 
@@ -249,7 +255,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
     setPokemonId([]);
     const tempArr = [];
     const difficultyLength =
-      difficulty === "Easy" ? 4 : difficulty === "Medium" ? 6 : 9;
+      difficulty === "Easy" ? 4 : difficulty === "Medium" ? 5 : 9;
     while (tempArr.length < difficultyLength) {
       const randomNum = Math.floor(Math.random() * 98) + 1;
       if (!tempArr.includes(randomNum)) {
