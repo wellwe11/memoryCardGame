@@ -366,7 +366,6 @@ export default function MainContent({ difficulty, displayFormFn }) {
   const setHeaderReset = () => {
     setFetchedData(false);
     setPokemons([]);
-    setCardOrder([0, 1, 2, 3, 4, 5, 6, 7, 8]);
     setPokemonIds();
     setClickedNumbers([]);
     cardChange();
