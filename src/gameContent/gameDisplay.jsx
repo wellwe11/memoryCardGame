@@ -12,6 +12,10 @@ import waterCard from "./gameContentImages/waterCard.png";
 import electricityCard from "./gameContentImages/electricityCard.png";
 import grassCard from "./gameContentImages/grassCard.png";
 import psychicCard from "./gameContentImages/psychicCard.png";
+import normalCard from "./gameContentImages/normalCard.png";
+import steelCard from "./gameContentImages/steelCard.png";
+import fightingCard from "./gameContentImages/fightingCard.png";
+
 import pokemonBackgroundImage from "./gameContentImages/pokemonBackgroundImage.jpg";
 import mainBackgroundImage from "./gameContentImages/backgroundWallpaper.webp";
 import scoreBoardCloud from "./gameContentImages/cloudTwo.webp";
@@ -147,9 +151,18 @@ function Card({
   const pokemonTypeImages = {
     fire: fireCard,
     water: waterCard,
-    electricity: electricityCard,
+    electric: electricityCard,
     grass: grassCard,
     psychic: psychicCard,
+    normal: normalCard,
+    steel: steelCard,
+    fighting: fightingCard,
+    poison: psychicCard,
+    rock: fightingCard,
+    bug: grassCard,
+    fairy: normalCard,
+    ground: fightingCard,
+    ghost: psychicCard,
   };
 
   return (
@@ -281,6 +294,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
       });
 
       const pokemonData = await Promise.all(fetchedPokemons);
+      console.log(pokemonData);
 
       // create my own object with information I explicitly need
       const newPokemons = pokemonData.map((pokemon) => ({
