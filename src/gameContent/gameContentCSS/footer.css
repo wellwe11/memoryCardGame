@@ -17,3 +17,9 @@ footer {
   width: fit-content;
   height: fit-content;
 }
+
+footer img {
+  margin-left: -5px;
+  height: 13px;
+  width: 13px;
+}

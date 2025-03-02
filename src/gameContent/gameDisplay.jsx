@@ -21,6 +21,8 @@ import pokemonBackgroundImage from "./gameContentImages/pokemonBackgroundImage.j
 import mainBackgroundImage from "./gameContentImages/backgroundWallpaper.webp";
 import scoreBoardCloud from "./gameContentImages/cloudTwo.webp";
 
+import pixelHeart from "./gameContentImages/pixelHeart.png";
+
 import { useState, useEffect } from "react";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -219,7 +221,10 @@ function FooterContent() {
   return (
     <footer className="">
       <div className="footerTextContainer">
-        <h3>Made by Robin Ryan with love</h3>
+        <h3>
+          Made by Robin Ryan with{" "}
+          <img src={pixelHeart} alt="pixelated heart image"></img>
+        </h3>
       </div>
     </footer>
   );
