@@ -3,6 +3,7 @@ import "./gameContentCSS/headerStyle.css";
 import "./gameContentCSS/scoreBoard.css";
 import "./gameContentCSS/mainContent.css";
 import "./gameContentCSS/card.css";
+import "./gameContentCSS/footer.css";
 
 import BacksideCard from "./gameContentImages/pokemonCardBackside.jpg";
 import LoadingSVG from "./loadingSVG";
@@ -216,9 +217,10 @@ function Card({
 
 function FooterContent() {
   return (
-    <footer>
-      <div></div>
-      <div></div>
+    <footer className="">
+      <div className="footerTextContainer">
+        <h3>Made by Robin Ryan with love</h3>
+      </div>
     </footer>
   );
 }
