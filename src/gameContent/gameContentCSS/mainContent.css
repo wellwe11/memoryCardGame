@@ -1,5 +1,5 @@
 .mainContentClass {
-  height: 850px;
+  height: fit-content;
 
   display: flex;
   flex-direction: column;
@@ -12,9 +12,8 @@
 .cardBoardContainer {
   width: fit-content;
   height: fit-content;
-  min-height: 600px;
-  max-width: 800px;
 
+  height: 500px;
   display: flex;
   justify-content: center;
 

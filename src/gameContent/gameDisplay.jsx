@@ -238,8 +238,8 @@ export default function MainContent({ difficulty, displayFormFn }) {
     difficulty === "Easy"
       ? [0, 1, 2, 3]
       : difficulty === "Medium"
-      ? [0, 1, 2, 3, 4]
-      : [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      ? [0, 1, 2, 3, 4, 5, 6, 7]
+      : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   );
 
   const [pokemonId, setPokemonId] = useState([]);
@@ -255,7 +255,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
     setPokemonId([]);
     const tempArr = [];
     const difficultyLength =
-      difficulty === "Easy" ? 4 : difficulty === "Medium" ? 5 : 9;
+      difficulty === "Easy" ? 4 : difficulty === "Medium" ? 8 : 12;
     while (tempArr.length < difficultyLength) {
       const randomNum = Math.floor(Math.random() * 98) + 1;
       if (!tempArr.includes(randomNum)) {
@@ -292,7 +292,6 @@ export default function MainContent({ difficulty, displayFormFn }) {
 
       const pokemons = await data;
 
-      console.log(pokemonId);
       const fetchedPokemons = pokemonId.map((n) => {
         return fetch(
           `https://pokeapi.co/api/v2/pokemon/${pokemons.results[n].name}`
@@ -300,7 +299,6 @@ export default function MainContent({ difficulty, displayFormFn }) {
       });
 
       const pokemonData = await Promise.all(fetchedPokemons);
-      console.log(pokemonData);
 
       // create my own object with information I explicitly need
       const newPokemons = pokemonData.map((pokemon) => ({
@@ -310,7 +308,6 @@ export default function MainContent({ difficulty, displayFormFn }) {
         id: pokemon.id,
       }));
 
-      console.log(newPokemons);
       setPokemons((prevPokemons) => [...prevPokemons, ...newPokemons]);
     };
 
@@ -387,10 +384,16 @@ export default function MainContent({ difficulty, displayFormFn }) {
         />
         <div
           className="cardBoardContainer"
-          style={{ alignContent: fetchedData ? "flex-start" : "center" }}
+          style={{
+            alignContent: fetchedData ? "flex-start" : "center",
+            maxWidth:
+              difficulty === "Easy" || difficulty === "Medium"
+                ? "800px"
+                : "1100px",
+          }}
         >
           {fetchedData ? (
-            cardOrder.map((el, index) => (
+            cardOrder.map((el) => (
               <Card
                 pokemonName={pokemons[el].name}
                 typeOne={pokemons[el].typeOne}
