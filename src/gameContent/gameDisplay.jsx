@@ -229,6 +229,11 @@ export default function MainContent({ difficulty, displayFormFn }) {
   const [pokemons, setPokemons] = useState([]);
 
   useEffect(() => {
+    setPokemonIds();
+  }, [difficulty]);
+
+  const setPokemonIds = () => {
+    setPokemonId([]);
     const tempArr = [];
     const difficultyLength =
       difficulty === "Easy" ? 4 : difficulty === "Medium" ? 6 : 9;
@@ -240,7 +245,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
     }
 
     setPokemonId(tempArr);
-  }, [difficulty]);
+  };
 
   const cardClicked = (e) => {
     if (!clickedNumbers.includes(Number(e.target.id))) {
@@ -285,6 +290,7 @@ export default function MainContent({ difficulty, displayFormFn }) {
         id: pokemon.id,
       }));
 
+      console.log(newPokemons);
       setPokemons((prevPokemons) => [...prevPokemons, ...newPokemons]);
     };
 
@@ -334,10 +340,13 @@ export default function MainContent({ difficulty, displayFormFn }) {
   };
 
   const setHeaderReset = () => {
-    setScore(0);
+    setFetchedData(false);
+    setPokemons([]);
+    setCardOrder([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    setPokemonIds();
     setClickedNumbers([]);
-    changeCardOrder();
     cardChange();
+    setScore(0);
     setBestScore(0);
   };
 
